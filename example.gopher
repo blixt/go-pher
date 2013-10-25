@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+</head>
+<body>
+<?
+func greet(name string) string{
+  return "what up, " + name
+}
+?>
+	<h1><?= greet("blixt") ?></h1>
+</body>
+</html>
