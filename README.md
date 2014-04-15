@@ -14,4 +14,37 @@ To compile the example file, just run this on the command line:
 
     go run main.go -i example.gopher
 
-The output will be printed to stdout.
+This will turn the following *gopher* template:
+
+```php
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+</head>
+<body>
+<?
+func greet(name string) string{
+  return "what up, " + name
+}
+?>
+	<h1><?= greet("blixt") ?></h1>
+</body>
+</html>
+```
+
+Into this Go code (and output it on stdout):
+
+```go
+package main
+import "fmt"
+func greet(name string) string{
+  return "what up, " + name
+}
+func main() {
+fmt.Print("<!DOCTYPE html>\n<html>\n<head>\n\t<title>Test</title>\n</head>\n<body>\n")
+fmt.Print("\t<h1>")
+fmt.Print(greet("blixt"))
+fmt.Print("</h1>\n</body>\n</html>\n")
+}
+```
