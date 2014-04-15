@@ -32,7 +32,7 @@ func main() {
 
 	const (
 		startTag = "<\\?=?\\s*"
-		endTag = "\\?>(?:\\r\\n|\\r|\\n|)"
+		endTag   = "\\?>(?:\\r\\n|\\r|\\n|)"
 		untilTag = "((?:[^<]+|<[^?])*)"
 	)
 	blocks := regexp.MustCompile("\\A" + untilTag + startTag + "|" + endTag + untilTag + startTag + "|" + endTag + "((?s).*)\\z")
@@ -55,12 +55,12 @@ func main() {
 
 		if i != indices[0] {
 			code := strings.TrimSpace(src[i:indices[0]])
-			if src[i - 2] == '=' {
+			if src[i-2] == '=' {
 				code = "fmt.Print(" + code + ")"
 			}
 
 			if _, err := parser.ParseExpr(code); err != nil {
-				if _, err := parser.ParseFile(fs, "", "package p;" + code, 0); err != nil {
+				if _, err := parser.ParseFile(fs, "", "package p;"+code, 0); err != nil {
 					fmt.Fprintf(os.Stderr, "error in %s[%d]: %s\n", input, 0, err)
 					os.Exit(1)
 				} else {
@@ -77,7 +77,7 @@ func main() {
 		}
 	}
 
-	if i < len(src) - 1 {
+	if i < len(src)-1 {
 		fmt.Fprintln(os.Stderr, "parse failed")
 		os.Exit(1)
 	}
