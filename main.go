@@ -7,6 +7,7 @@ import (
 	"go/parser"
 	"go/token"
 	"io/ioutil"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -17,21 +18,24 @@ func main() {
 	flag.Parse()
 
 	if len(input) == 0 {
-		panic("no input file given")
+		fmt.Fprintln(os.Stderr, "no input file given")
+		os.Exit(1)
 	}
 
 	var src string
 	if data, err := ioutil.ReadFile(input); err != nil {
-		panic(err)
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	} else {
 		src = string(data)
 	}
 
-	startTag := "<\\?=?\\s*"
-	endTag := "\\?>(?:\\r\\n|\\r|\\n|)"
-	untilTag := "((?:[^<]+|<[^?])*)"
+	const (
+		startTag = "<\\?=?\\s*"
+		endTag = "\\?>(?:\\r\\n|\\r|\\n|)"
+		untilTag = "((?:[^<]+|<[^?])*)"
+	)
 	blocks := regexp.MustCompile("\\A" + untilTag + startTag + "|" + endTag + untilTag + startTag + "|" + endTag + "((?s).*)\\z")
-
 
 	fs := token.NewFileSet()
 
@@ -51,13 +55,14 @@ func main() {
 
 		if i != indices[0] {
 			code := strings.TrimSpace(src[i:indices[0]])
-			if src[i - 1] == '=' {
+			if src[i - 2] == '=' {
 				code = "fmt.Print(" + code + ")"
 			}
 
 			if _, err := parser.ParseExpr(code); err != nil {
 				if _, err := parser.ParseFile(fs, "", "package p;" + code, 0); err != nil {
-					panic(fmt.Sprintf("error in %s[%d]: %s", input, 0, err))
+					fmt.Fprintf(os.Stderr, "error in %s[%d]: %s\n", input, 0, err)
+					os.Exit(1)
 				} else {
 					fmt.Fprintln(head, code)
 				}
@@ -73,7 +78,8 @@ func main() {
 	}
 
 	if i < len(src) - 1 {
-		panic("parse failed")
+		fmt.Fprintln(os.Stderr, "parse failed")
+		os.Exit(1)
 	}
 
 	fmt.Println("package main")
