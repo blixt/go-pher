@@ -10,11 +10,20 @@ with Go code in `<? … ?>` statements) and outputs a Go program.
 Example
 -------
 
-To compile the example file, just run this on the command line:
+To run the example:
 
-    go run main.go -i example.gopher
+```bash
+# Convert the .gopher file to a .go file
+go run main.go -i example.gopher > example.go
+# Run the .go file to get the HTML
+go run example.go > example.html
+# Open the HTML file!
+open example.html
+```
 
-This will turn the following *gopher* template:
+See below for the resulting contents of each file.
+
+### example.gopher
 
 ```html
 <!DOCTYPE html>
@@ -33,7 +42,7 @@ func greet(name string) string{
 </html>
 ```
 
-Into this Go code (and output it on stdout):
+### example.go
 
 ```go
 package main
@@ -49,7 +58,7 @@ fmt.Print("</h1>\n</body>\n</html>\n")
 }
 ```
 
-Which in turn, when executed with `go run`, will output this:
+### example.html
 
 ```html
 <!DOCTYPE html>
