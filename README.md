@@ -16,7 +16,7 @@ To compile the example file, just run this on the command line:
 
 This will turn the following *gopher* template:
 
-```php
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,4 +47,18 @@ fmt.Print("\t<h1>")
 fmt.Print(greet("blixt"))
 fmt.Print("</h1>\n</body>\n</html>\n")
 }
+```
+
+Which in turn, when executed with `go run`, will output this:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+</head>
+<body>
+	<h1>what up, blixt</h1>
+</body>
+</html>
 ```
