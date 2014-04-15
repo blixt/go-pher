@@ -1,4 +1,4 @@
-Pher /fɜː(ɹ)/
+Pher /fə(ɹ)/
 =============
 
 A very early/ugly implementation of the PHP of Go.
