@@ -7,6 +7,16 @@ This program basically takes an input `.gopher` file (HTML mixed
 with Go code in `<? … ?>` statements) and outputs a Go program.
 
 
+Set up
+------
+
+To set it up, just install this package:
+
+```bash
+go get github.com/blixt/go-pher
+```
+
+
 Example
 -------
 
