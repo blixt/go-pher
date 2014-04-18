@@ -83,9 +83,13 @@ func main() {
 	}
 
 	fmt.Println("package main")
-	fmt.Println("import \"fmt\"")
+	fmt.Println("import (")
+	fmt.Println(`"fmt"`)
+	fmt.Println(`"github.com/blixt/go-pher/pher"`)
+	fmt.Println(")")
 	fmt.Print(head)
 	fmt.Println("func main() {")
+	fmt.Println(`fmt.Print("Content-Type: text/html\r\n\r\n")`)
 	fmt.Print(body)
 	fmt.Println("}")
 }

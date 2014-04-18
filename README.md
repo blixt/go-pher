@@ -15,10 +15,13 @@ To run the example:
 ```bash
 # Convert the .gopher file to a .go file
 go run main.go -i example.gopher > example.go
-# Run the .go file to get the HTML
-go run example.go > example.html
-# Open the HTML file!
-open example.html
+# Build the .go file into a cgi-bin directory
+mkdir cgi-bin
+go build -o cgi-bin/example example.go
+# Start up a CGI server (Python makes it easy)
+python -m CGIHTTPServer
+# Open the page!
+open http://localhost:8000/cgi-bin/example?name=world
 ```
 
 See below for the resulting contents of each file.
@@ -37,7 +40,7 @@ func greet(name string) string{
   return "what up, " + name
 }
 ?>
-	<h1><?= greet("blixt") ?></h1>
+	<h1><?= greet(pher.Get("name")) ?></h1>
 </body>
 </html>
 ```
@@ -46,19 +49,23 @@ func greet(name string) string{
 
 ```go
 package main
-import "fmt"
+import (
+"fmt"
+"github.com/blixt/go-pher/pher"
+)
 func greet(name string) string{
   return "what up, " + name
 }
 func main() {
+fmt.Print("Content-Type: text/html\r\n\r\n")
 fmt.Print("<!DOCTYPE html>\n<html>\n<head>\n\t<title>Test</title>\n</head>\n<body>\n")
 fmt.Print("\t<h1>")
-fmt.Print(greet("blixt"))
+fmt.Print(greet(pher.Get("name")))
 fmt.Print("</h1>\n</body>\n</html>\n")
 }
 ```
 
-### example.html
+### Output HTML
 
 ```html
 <!DOCTYPE html>
@@ -67,7 +74,7 @@ fmt.Print("</h1>\n</body>\n</html>\n")
 	<title>Test</title>
 </head>
 <body>
-	<h1>what up, blixt</h1>
+	<h1>what up, world</h1>
 </body>
 </html>
 ```

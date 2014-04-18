@@ -9,6 +9,6 @@ func greet(name string) string{
   return "what up, " + name
 }
 ?>
-	<h1><?= greet("blixt") ?></h1>
+	<h1><?= greet(pher.Get("name")) ?></h1>
 </body>
 </html>
