@@ -1,7 +1,7 @@
 Pher /fə(ɹ)/
 =============
 
-A very early/ugly implementation of the PHP of Go.
+Disclaimer: Most of this code was written while inebriated.
 
 This program basically takes an input `.gopher` file (HTML mixed
 with Go code in `<? … ?>` statements) and outputs a Go program.
